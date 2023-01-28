@@ -1,0 +1,7 @@
+PORT= 3000
+//   dialect:'postgres'
+//   host: 'localhost',
+//   username: 'postgres'
+//   password: ''
+//   database: ''
+//   logging: false,
