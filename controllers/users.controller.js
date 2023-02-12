@@ -1,38 +1,39 @@
 const User = require("../models/user.model");
+const catchAsync = require("../utils/catchAsync");
 
-exports.findAllUsers= async(req,res)=>{
-    const Users= await User.findAll({
+exports.findAllUsers= catchAsync(async(req,res,next)=>{
+    const users= await User.findAll({
         where:{
             status:'available',
         },
     });
     res.status(200).json({
         status:'success',
-        message: 'The Users were found successfully ',
-        Users,
+        message: 'The users were found successfully ',
+        users,
     })
-};
-exports.findUser=async(req,res)=>{
+});
+exports.findUser=catchAsync(async(req,res,next)=>{
     const {id}=req.params;
-    const Users=await User.findOne({
+    const users=await User.findOne({
         where:{
             id,
             status: 'available',
         },
     });
-    if(Users===null){
-        return res.status(404).json({
-            status:'error',
-            message:'The user was not found',
-        });
-    }
+    // if(users===null){
+    //     return res.status(404).json({
+    //         status:'error',
+    //         message:'The user was not found',
+    //     });
+    // }
     res.status(201).json({
         status:'success',
-        message: 'The User was found successfully Method get',
-        Users,
+        message: 'The User was found successfully ',
+        users,
     })
-}
-exports.createUser= async(req,res)=>{
+});
+exports.createUser= catchAsync(async(req,res,next)=>{
 
     const {name,email,password,role,status}=req.body;
 
@@ -48,26 +49,26 @@ exports.createUser= async(req,res)=>{
         message: 'User created',
         newUser,
     });
-};
+});
 
-exports.updateUser=async(req,res)=>{
+exports.updateUser=catchAsync(async(req,res,next)=>{
 
     const{id}=req.params;
     const {name,email,password,role,status}= req.body;
 
-    const Users=await User.findOne({
+    const user=await User.findOne({
         where:{
             id,
             status: 'available',
         },
     });
-    if(!Users){
-        return res.status(404).json({
-            status:'error',
-            message:'The user was not found',
-        });
-    }
-   const updatedUser= await Users.update({
+    // if(!user){
+    //     return res.status(404).json({
+    //         status:'error',
+    //         message:'The user was not found',
+    //     });
+    // }
+   const updatedUser= await user.update({
     name,email,password,role,status
 })
 
@@ -76,25 +77,25 @@ exports.updateUser=async(req,res)=>{
         message: 'User updated',
         updatedUser, 
     })
-};
-exports.deleteUser=async(req,res)=>{
+});
+exports.deleteUser=catchAsync(async(req,res,next)=>{
     const {id}=req.params;
-    const Users=await User.findOne({
+    const users=await User.findOne({
         where:{
             id,
             status: 'available',
         },
     });
-    if(!Users){
-        return res.status(404).json({
-            status:'error',
-            message:'The user was not found',
-        });
-    }
-    await Users.update({status:'not available'});
+    // if(!users){
+    //     return res.status(404).json({
+    //         status:'error',
+    //         message:'The user was not found',
+    //     });
+    // }
+    await users.update({status:'not available'});
     res.status(200).json({
         status:'success',
         message: 'User deleted',
         
     })
-}
+});

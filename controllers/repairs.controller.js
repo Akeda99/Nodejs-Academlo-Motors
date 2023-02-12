@@ -51,7 +51,7 @@ exports.createRepairs= async(req,res)=>{
 };
 exports.updateRepair=async(req,res)=>{
     const {id}=req.params;
-    const {date,userId,status}=req.body;
+    const {status}=req.body;
 
     const Repairs=await Repair.findOne({
         where:{
@@ -66,7 +66,7 @@ exports.updateRepair=async(req,res)=>{
         });
     }
     const updatedRepair= await Repairs.update({
-        date,userId,status
+        status
     })
 
     res.status(200).json({
