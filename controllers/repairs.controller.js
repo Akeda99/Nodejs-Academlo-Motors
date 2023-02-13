@@ -1,7 +1,8 @@
 const Repair= require('../models/repair.model')
 const User = require('../models/user.model')
+const catchAsync = require('../utils/catchAsync')
 
-exports.findAllRepairs=async(req,res)=>{
+exports.findAllRepairs=catchAsync(async(req,res,next)=>{
     const Repairs= await Repair.findAll({
         where:{
             status: 'pending'
@@ -12,8 +13,8 @@ exports.findAllRepairs=async(req,res)=>{
         message: 'The repairs were found successfully ',
         Repairs,
     })
-}
-exports.findRepair=async(req,res)=>{
+})
+exports.findRepair=catchAsync(async(req,res,next)=>{
     const{id}=req.params;
     const Repairs=await Repair.findOne({
         where:{
@@ -21,26 +22,28 @@ exports.findRepair=async(req,res)=>{
             status: 'pending',
         },
     });
-    if(Repairs===null){
-        return res.status(404).json({
-            status:'error',
-            message:'The repair was not found',
-        });
-    }
+    // if(Repairs===null){
+    //     return res.status(404).json({
+    //         status:'error',
+    //         message:'The repair was not found',
+    //     });
+    // }
     res.status(201).json({
         status:'success',
         message: 'The repair was found successfully ',
         Repairs,
     })
-}
-exports.createRepairs= async(req,res)=>{
+})
+exports.createRepairs= catchAsync(async(req,res,next)=>{
 
-    const {date,userId,status}=req.body;
+    const {date,userId,status, motorsNumber, description}=req.body;
 
     const newRepair= await Repair.create({
         date,
         userId,
-        status
+        status,
+        motorsNumber,
+        description,
     })
 
     res.status(201).json({
@@ -48,8 +51,8 @@ exports.createRepairs= async(req,res)=>{
         message: 'Repair created',
         newRepair,
     });
-};
-exports.updateRepair=async(req,res)=>{
+});
+exports.updateRepair=catchAsync(async(req,res,next)=>{
     const {id}=req.params;
     const {status}=req.body;
 
@@ -59,12 +62,12 @@ exports.updateRepair=async(req,res)=>{
             status:'pending'
         }
     })
-    if(Repairs===null){
-        return res.status(404).json({
-            status:'error',
-            message:'The Repair was not found',
-        });
-    }
+    // if(Repairs===null){
+    //     return res.status(404).json({
+    //         status:'error',
+    //         message:'The Repair was not found',
+    //     });
+    // }
     const updatedRepair= await Repairs.update({
         status
     })
@@ -74,8 +77,8 @@ exports.updateRepair=async(req,res)=>{
         message: 'Repair updated',
         updatedRepair,
     })
-}
-exports.deleteRepair=async(req,res)=>{
+})
+exports.deleteRepair=catchAsync(async(req,res,next)=>{
     const {id}=req.params;
     const Repairs= await Repair.findOne({
         where:{
@@ -83,16 +86,16 @@ exports.deleteRepair=async(req,res)=>{
             status: 'pending',
         }
     });
-    if(!Repairs){
-        return res.status(404).json({
-            status:'error',
-            message:'The repair was not found',
-        });
-    }
+    // if(!Repairs){
+    //     return res.status(404).json({
+    //         status:'error',
+    //         message:'The repair was not found',
+    //     });
+    // }
     
     await Repairs.update({status:'cancelled'});
     res.json({
         status: 'success',
         message: 'Repair deleted',
     })
-}
+});

@@ -16,6 +16,14 @@ const Repair=db.define('repair',{
         type: DataTypes.STRING,
         allowNull: false,
     },
+    motorsNumber:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    description:{
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     status:{
         type: DataTypes.STRING,
         allowNull: false,
