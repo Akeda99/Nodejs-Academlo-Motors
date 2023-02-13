@@ -21,12 +21,7 @@ exports.findUser=catchAsync(async(req,res,next)=>{
             status: 'available',
         },
     });
-    // if(users===null){
-    //     return res.status(404).json({
-    //         status:'error',
-    //         message:'The user was not found',
-    //     });
-    // }
+
     res.status(201).json({
         status:'success',
         message: 'The User was found successfully ',
@@ -62,12 +57,6 @@ exports.updateUser=catchAsync(async(req,res,next)=>{
             status: 'available',
         },
     });
-    // if(!user){
-    //     return res.status(404).json({
-    //         status:'error',
-    //         message:'The user was not found',
-    //     });
-    // }
    const updatedUser= await user.update({
     name,email,password,role,status
 })
@@ -86,12 +75,6 @@ exports.deleteUser=catchAsync(async(req,res,next)=>{
             status: 'available',
         },
     });
-    // if(!users){
-    //     return res.status(404).json({
-    //         status:'error',
-    //         message:'The user was not found',
-    //     });
-    // }
     await users.update({status:'not available'});
     res.status(200).json({
         status:'success',

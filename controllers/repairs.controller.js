@@ -22,12 +22,6 @@ exports.findRepair=catchAsync(async(req,res,next)=>{
             status: 'pending',
         },
     });
-    // if(repair===null){
-    //     return res.status(404).json({
-    //         status:'error',
-    //         message:'The repair was not found',
-    //     });
-    // }
     res.status(201).json({
         status:'success',
         message: 'The repair was found successfully ',
@@ -62,12 +56,6 @@ exports.updateRepair=catchAsync(async(req,res,next)=>{
             status:'pending'
         }
     })
-    // if(repair===null){
-    //     return res.status(404).json({
-    //         status:'error',
-    //         message:'The Repair was not found',
-    //     });
-    // }
     const updatedRepair= await repair.update({
         status
     })
@@ -86,12 +74,6 @@ exports.deleteRepair=catchAsync(async(req,res,next)=>{
             status: 'pending',
         }
     });
-    // if(!repair){
-    //     return res.status(404).json({
-    //         status:'error',
-    //         message:'The repair was not found',
-    //     });
-    // }
     
     await repair.update({status:'cancelled'});
     res.json({
