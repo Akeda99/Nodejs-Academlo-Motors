@@ -11,7 +11,7 @@ exports.findAllUsers= catchAsync(async(req,res,next)=>{
         status:'success',
         message: 'The users were found successfully ',
         users,
-    })
+    });
 });
 exports.findUser=catchAsync(async(req,res,next)=>{
     const {id}=req.params;

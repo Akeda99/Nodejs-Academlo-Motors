@@ -1,6 +1,6 @@
 
 const Repair = require("../models/repair.model");
-const appError = require("../utils/appError");
+const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
 exports.validIfExistRepair=catchAsync(async(req,res,next)=>{
