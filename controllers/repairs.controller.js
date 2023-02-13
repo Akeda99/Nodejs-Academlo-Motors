@@ -56,19 +56,19 @@ exports.updateRepair=catchAsync(async(req,res,next)=>{
     const {id}=req.params;
     const {status}=req.body;
 
-    const Repairs=await Repair.findOne({
+    const repair=await Repair.findOne({
         where:{
             id,
             status:'pending'
         }
     })
-    // if(Repairs===null){
+    // if(repair===null){
     //     return res.status(404).json({
     //         status:'error',
     //         message:'The Repair was not found',
     //     });
     // }
-    const updatedRepair= await Repairs.update({
+    const updatedRepair= await repair.update({
         status
     })
 
@@ -80,20 +80,20 @@ exports.updateRepair=catchAsync(async(req,res,next)=>{
 })
 exports.deleteRepair=catchAsync(async(req,res,next)=>{
     const {id}=req.params;
-    const Repairs= await Repair.findOne({
+    const repair= await Repair.findOne({
         where:{
             id,
             status: 'pending',
         }
     });
-    // if(!Repairs){
+    // if(!repair){
     //     return res.status(404).json({
     //         status:'error',
     //         message:'The repair was not found',
     //     });
     // }
     
-    await Repairs.update({status:'cancelled'});
+    await repair.update({status:'cancelled'});
     res.json({
         status: 'success',
         message: 'Repair deleted',
